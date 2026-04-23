@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise') //Acceso
-requiere('dotenv').config() //Leer los valores del archivo de configuración
+require('dotenv').config() //Leer los valores del archivo de configuración
 
 //pool de conexiones => "conjunto de conexiones disponibles"
 //conexión "regular" (normal) => usuario1 => abre => proceso > cierra
