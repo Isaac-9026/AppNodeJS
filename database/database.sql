@@ -9,12 +9,12 @@ CREATE TABLE IF NOT EXISTS marcas(
     UPDATE CURRENT_TIMESTAMP
 )ENGINE = INNODB;
 
-/*
+
 INSERT INTO marcas (nombremarca) VALUES ('Samsumg');
 INSERT INTO marcas (nombremarca) VALUES ('AMD');
 UPDATE marcas SET nombremarca = 'HP' WHERE id = 1;
 SELECT * FROM marcas;
-*/
+
 
 -- Garantía en meses
 CREATE TABLE IF NOT EXISTS productos(
