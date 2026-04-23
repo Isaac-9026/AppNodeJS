@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended: true})) //form
 app.use(express.static(path.join(__dirname, 'public')))
 
 //Rutas (API) Test: Postman
-app.use('/routes/productos', require('./routes/productos'))
+app.use('/api/productos', require('./routes/productos'))
 app.use('/api/marcas', require('./routes/marcas'))
 
 //3. Todo lo que no tiene ruta o el servidor no lo direccionar
