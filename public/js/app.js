@@ -18,6 +18,7 @@ const AppState = {
   productos: [],
   marcas:    [],
   clientes:  [],
+  proveedores:  [],
   deleteTarget: { type: null, id: null, name: null, onConfirm: null },
 };
 
