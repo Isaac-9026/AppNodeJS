@@ -1,52 +1,46 @@
-require('dotenv').config(); //Acceder al puerto
-const express = require('express'); //Framework
+require('dotenv').config();
+const express = require('express');
 
-//Mecanismo  de seguridad, permite al backend especificar origenes permitidos
-const cors = require('cors')
+//Es un mecanismo de seguridad que permite a un servidor backend (Node.js) especificar qué 
+//orígenes (dominios, puertos o protocolos) tienen permiso para acceder a sus recursos,
+const cors = require('cors'); //Interccambio de recursos entre dominios
 
-//Gestión de rutas seguras y compatibles. Windows \, Linux, MacOS /
+//Permite trabajar con rutas de archivos y directorios de manera más sencilla y segura,
+//independiente del sistema operativo (Windows, Linux, macOS).
 const path = require('path');
 
-//Puerto donde se ejecuta nuestro servidor
-const app = express() //instancias
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-//1 .MIDDLEWARES (función intermedia)
-app.use(cors()) //Backend - frontend
-app.use(express.json()) //api
-app.use(express.urlencoded({extended: true})) //form
+// ── 1. Middlewares ──────────────────────────────────────────────
+app.use(cors());
+app.use(express.json()); // Para parsear JSON en el cuerpo de las solicitudes
+app.use(express.urlencoded({ extended: true })); // Para parsear datos de formularios (x-www-form-urlencoded)
 
-//Archivos estáticos  servir (frontend)
-app.use(express.static(path.join(__dirname, 'public')))
+// Servir archivos estáticos (frontend SPA)
+app.use(express.static(path.join(__dirname, 'public')));
 
-//Rutas (API) Test: Postman
-app.use('/api/productos', require('./routes/productos'))
-app.use('/api/marcas', require('./routes/marcas'))
+// ── Rutas API ────────────────────────────────────────────────
+app.use('/api/productos', require('./routes/productos'));
+app.use('/api/marcas', require('./routes/marcas'));
 
-//3. Todo lo que no tiene ruta o el servidor no lo direccionar
-//SPA = Single Page Aplication -> http://localhost:3000/
-//Express V4: app.get('*', () => {})
-//Express V5: app.get('/{*path}', () => {})
-//req (require - solicitud)
-//res (response - respuesta)
+// ── 3. SPA: redirigir todo al index.html ────────────────────────
+//Cualquier ruta que el usuario escriba en el navegador y que no haya sido definida previamente en mi código
 app.get('/{*path}', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'))
-})
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-//Manejador de errores
-app.use((err, req, res, next) =>{
-  console.error(err)
-  res.status(500).json({success: false, message: 'Error interno del servidor'})
-})
+// ── Error handler global ─────────────────────────────────────
+app.use((err, req, res, next) => {
+  console.error('Error no manejado:', err.stack);
+  res.status(500).json({ success: false, message: 'Error interno del servidor' });
+});
 
-//Inicializamos el servidor
-app.listen(PORT, ()=> {
-  //URL: Aplicacion Web
-  console.log(`Servidor Web ejecutándose en http://localhost:${PORT}`)
-  //API productos
-  console.log(`API productos en http://localhost:${PORT}/api/productos`)
-  //API marcas
-  console.log(`API marcas en http://localhost:${PORT}/api/marcas`)
+// ── Iniciar servidor ─────────────────────────────────────────
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`API Productos: http://localhost:${PORT}/api/productos`);
+  console.log(`API Marcas:    http://localhost:${PORT}/api/marcas\n`);
 });
 
 module.exports = app;
