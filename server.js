@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ── Rutas API ────────────────────────────────────────────────
 app.use('/api/productos', require('./routes/productos'));
 app.use('/api/marcas', require('./routes/marcas'));
+app.use('/api/reportes', require('./routes/reportes')); //SE agregó para generar reportes
 
 // ── 3. SPA: redirigir todo al index.html ────────────────────────
 //Cualquier ruta que el usuario escriba en el navegador y que no haya sido definida previamente en mi código

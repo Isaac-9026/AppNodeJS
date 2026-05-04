@@ -82,9 +82,14 @@ function formatPrecio(val) {
   });
 }
 
-function formatFecha(fechaStr) {
-  if (!fechaStr) return '—';
-  const [y, m, d] = fechaStr.split('-');
-  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  return `${d} ${meses[parseInt(m, 10) - 1]} ${y}`;
+function formatFecha(date) {
+  const fecha = new Date(date);
+  if (isNaN(fecha)) {
+    return "Fecha inválida"; // Si la fecha no es válida
+  }
+  return fecha.toLocaleString("es-PE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
 }
